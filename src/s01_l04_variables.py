@@ -1,5 +1,3 @@
-from pdb import TESTCMD
-
 age = 30
 print(age)
 print(51)

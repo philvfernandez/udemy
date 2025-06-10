@@ -52,15 +52,19 @@ def find_movie_by_title():
         else:
             print("Movie Not Found For this Title")
 
+# Makes use of first class functions
+user_options = {
+    "a": add_movie,
+    "l": list_movies,
+    "f": find_movie_by_title,
+}
+
 def menu():
     selection = input(MENU_PROMPT)
     while selection != "q":
-        if selection == "a":
-            add_movie()
-        elif selection == "l":
-            list_movies()
-        elif selection == "f":
-            find_movie_by_title()
+        if selection in user_options:
+            selected_function = user_options[selection]
+            selected_function()
         else:
             print("Unknown command.  Please try again.")
 

@@ -31,6 +31,10 @@ class Student:
     def average(self):
         return sum(self.grades) / len(self.grades)
 
+    def print_info(self):
+        print(f"<<{self.name}>> grades {self.grades}")
+
+
 ## Creates an object of type Student
 student_one = Student('Tawnee Fernandez', [70, 88 ,90, 99])
 student_two = Student('Jose', [50, 68, 99, 100])
@@ -50,4 +54,6 @@ print(student_one.grades)
 def average(student):
     return sum(student.grades) / len(student.grades)
 print(average(student_one))
+
+student_one.print_info()
 

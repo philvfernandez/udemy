@@ -5,11 +5,11 @@
 from src.section1.s01_l16_lists import friends
 
 # My solution
-"""
-my_file_writing = open('/mnt/c/Edit/Dev/udemy/complete-python-course/src/section6/nearby_friends.txt', 'a') ## Erases any data currently in the file.
+
+my_file_writing = open('nearby_friends.txt', 'a') ## Erases any data currently in the file.
 for index in range(3):
-user_input = input("Enter your 3 friends: ")
-with open("/mnt/c/Edit/Dev/udemy/complete-python-course/src/section6/people.txt", "r") as file:
+    user_input = input("Enter your 3 friends: ")
+with open("people.txt", "r") as file:
     for line in file:
         # print("user input is: ", user_input)
         if(user_input == line.strip()):
@@ -18,6 +18,7 @@ with open("/mnt/c/Edit/Dev/udemy/complete-python-course/src/section6/people.txt"
 file.close()
 my_file_writing.close()
 
+"""
 # Solution from lecture
 friends = input('Enter three friend names, separated by commas (no spaces please').split(',')
 people = open('people.txt', 'r')

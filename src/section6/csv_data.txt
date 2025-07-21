@@ -1,0 +1,4 @@
+name,age,university,degree
+Phil,51,UNT,computer science
+jose,90,oxford,computing
+anna,30,MIT,physics

@@ -8,21 +8,24 @@ def add_book(name, author):
     books.append({'name': name, 'author': author, 'read': False})
 
 def delete_book(name):
-    global books
-    books = [book for book in books if book['name'] == name]
-
-def list_books():
-    global books
     for book in books:
-        print(book)
+        if book['name'] == name:
+            books.remove(book)
 
-def prompt_read_book(book_name):
-    global books
+def get_all_books():
+    return books
 
+def mark_book_as_read(name):
     for book in books:
-        if book['name'] == book_name:
+        if book['name'] == name:
             book['read'] = True
-        else:
-            print('Book name Not Found.')
+
+
+## This works but is not a good idea to delete something from a lists while you are looping through the list.
+##    for book in books:
+##        if book['name'] == name:
+##            book['read'] = True
+##        else:
+ ##           print('Book name Not Found.')
 
 

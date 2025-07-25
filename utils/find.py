@@ -1,4 +1,4 @@
-from utils.file_operations import save_to_file
+# from utils.file_operations import save_to_file
 # another way to make the above import is: from .file_operations import save_to_file
 # However, if you run just this py file, it will not work, resulting in a runtime error.
 #
@@ -13,3 +13,6 @@ def find_in(iterable, finder, expected):
 
 class NotFoundError(Exception):
     pass
+
+if __name__ == '__main__':
+    print(find_in(['Rolf', 'Jose', 'Jen'], lambda  x: x, 'Jose'))

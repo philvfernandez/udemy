@@ -1,4 +1,5 @@
 import json
+import sqlite3
 
 """
 Concerned with storing and retrieving books from a json file.
@@ -16,9 +17,21 @@ Format of the JSON file
 
 books_file = 'books.json'
 
+
 def create_book_table():
-    with open(books_file, 'w') as file:
-        json.dump([], file)
+    connection = sqlite3.connect('data.db')
+    # All operations in SQLite are made by cursors, and not by the connection object itself.
+    # That is so that we can have one single connection, but potentially multiple cursors either reading data and
+    # at most one writing data
+    cursor = connection.cursor()
+
+    cursor.execute('CREATE TABLE books(name text primary key , author text, read integer)')
+    # Commit means save the result of this query to disk.
+    # Keep a bunch of data in memory until we commit.
+    # We can write multiple things together, which is faster.
+    connection.commit()
+    connection.close()
+
 
 def add_book(name, author):
     books = get_all_books()

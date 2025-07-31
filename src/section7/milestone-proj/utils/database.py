@@ -1,23 +1,6 @@
 import json
 import sqlite3
 
-"""
-Concerned with storing and retrieving books from a json file.
-Format of the JSON file
-
-[
-    {
-        'name': 'Clean Code',
-        'author': 'Robert'
-        'read': True
-    }
-]
-...
-"""
-
-books_file = 'books.json'
-
-
 def create_book_table():
     connection = sqlite3.connect('data.db')
     # All operations in SQLite are made by cursors, and not by the connection object itself.
@@ -53,8 +36,22 @@ def add_book(name, author):
     connection.close()
 
 def get_all_books():
-    with open(books_file, 'r') as file:
-        return json.load(file) ## Returns a list
+    connection = sqlite3.connect('data.db')
+    # All operations in SQLite are made by cursors, and not by the connection object itself.
+    # That is so that we can have one single connection, but potentially multiple cursors either reading data and
+    # at most one writing data
+    cursor = connection.cursor()
+
+    cursor.execute('SELECT * FROM books')
+
+    # list of tuples --> [(name, author, read), (name, author, read)...]
+    # But to be consistent with our data structures, we will convert to list dictionaries as a comprehension
+    books = [{'name': row[0], 'author': row[1], 'read': row[2]} for row in cursor.fetchall()]
+
+    connection.close()
+    return books
+
+
 
 def _save_all_books(books): # no private method in python so the convention is to prepend the method with a '_'.
     with open(books_file, 'w') as file:

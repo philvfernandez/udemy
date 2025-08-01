@@ -9,6 +9,12 @@ class DatabaseConnection:
         self.connection = sqlite3.connect(self.host)
         return self.connection
 
+    # exc_type -> exception type
+    # exc_val -> exception value
+    # exc_tb -> exception trace back
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.connection.commit()
-        self.connection.close()
+        if exc_type or exc_val or exc_tb:
+            self.connection.close()
+        else:
+            self.connection.commit()
+            self.connection.close()

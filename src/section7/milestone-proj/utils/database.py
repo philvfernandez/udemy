@@ -51,32 +51,25 @@ def get_all_books():
     connection.close()
     return books
 
-
-
-def _save_all_books(books): # no private method in python so the convention is to prepend the method with a '_'.
-    with open(books_file, 'w') as file:
-        json.dump(books, file)
-
 def mark_book_as_read(name):
-    books = get_all_books()
-
-    for book in books:
-        if book['name'] == name:
-            book['read'] = True
-
-    _save_all_books(books)
+    connection = sqlite3.connect('data.db')
+    # All operations in SQLite are made by cursors, and not by the connection object itself.
+    # That is so that we can have one single connection, but potentially multiple cursors either reading data and
+    # at most one writing data
+    cursor = connection.cursor()
+    cursor.execute('UPDATE books SET read = ? WHERE name = ?', (1, name))
+    connection.commit()
+    connection.close()
 
 def delete_book(name):
-    books = get_all_books()
+    connection = sqlite3.connect('data.db')
+    # All operations in SQLite are made by cursors, and not by the connection object itself.
+    # That is so that we can have one single connection, but potentially multiple cursors either reading data and
+    # at most one writing data
+    cursor = connection.cursor()
 
-    books = [book for book in books if book['name'] != name]
-    _save_all_books(books)
-
-## This works but is not a good idea to delete something from a lists while you are looping through the list.
-##    for book in books:
-##        if book['name'] == name:
-##            book['read'] = True
-##        else:
- ##           print('Book name Not Found.')
+    cursor.execute('DELETE FROM books WHERE name = ?', (name,))
+    connection.commit()
+    connection.close()
 
 

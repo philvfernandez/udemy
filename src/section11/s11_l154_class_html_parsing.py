@@ -33,6 +33,18 @@ ITEM_HTML = '''<html><head></head><body>
 </body></html>
 '''
 
+class ParsedItemLocators:
+    """
+    Locators for an item in the HTML page.
+
+    This allows us to easily see what our code
+    will be looking at as well as change it quickly if we notice it is now different.
+    """
+    NAME_LOCATOR = 'article.product_pod h3 a'
+    LINK_LOCATOR = 'article.product_pod h3 a'
+    PRICE_LOCATOR = 'article.product_pod p.price_color'
+    RATING_LOCATOR = 'article.product_pod p.star-rating'
+
 class ParsedItem:
     """
     A class to take in an HTML page (or part of it), and find properties of an item in it.
@@ -43,20 +55,20 @@ class ParsedItem:
 
     @property
     def name(self):
-        locator = 'article.product_pod h3 a' # CSS locator
+        locator = ParsedItemLocators.NAME_LOCATOR
         item_link = self.soup.select_one(locator)
         item_name = item_link.attrs['title']
         return item_name
 
     @property
     def link(self):
-        locator = 'article.product_pod h3 a' # CSS locator
+        locator = ParsedItemLocators.LINK_LOCATOR
         item_link = self.soup.select_one(locator).attrs['href']
         return item_link
 
     @property
     def price(self):
-        locator = 'article.product_pod p.price_color'
+        locator = ParsedItemLocators.PRICE_LOCATOR
         item_price = self.soup.select_one(locator).string # £51.77
 
         """
@@ -71,7 +83,7 @@ class ParsedItem:
 
     @property
     def rating(self):
-        locator = 'article.product_pod p.star-rating'
+        locator = ParsedItemLocators.RATING_LOCATOR
         #rating = soup.select_one(locator).attrs['class'][1]
         star_rating_tag = self.soup.select_one(locator)
         classes = star_rating_tag.attrs['class'] # ['star-rating', 'Three']

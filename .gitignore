@@ -171,3 +171,4 @@ cython_debug/
 .pypirc
 /data.db
 /.idea/data_source_mapping.xml
+/log.txt

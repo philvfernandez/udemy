@@ -24,6 +24,22 @@ books_generator = (x for x in books)
 def get_next_book():
     print(next(books_generator))
 
+# A more efficient way to create a menu is to use a dictionary.
+user_choices = {
+    'b': print_best_books,
+    'c': print_cheapest_books,
+    'n': get_next_book,
+    'q': quit
+}
+
+def menu_dict():
+    user_input = input(USER_CHOICE)
+    while user_input != 'q':
+        if user_input in ('b', 'c', 'n'):
+            user_choices[user_input]()
+        else:
+            print('Unknown command.  Please try again.')
+
 def menu():
     user_input = input(USER_CHOICE)
     while user_input != 'q':

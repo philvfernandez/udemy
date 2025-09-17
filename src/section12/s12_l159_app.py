@@ -5,5 +5,5 @@ chrome = webdriver.Chrome()
 chrome.get('https://quotes.toscrape.com/search.aspx')
 page = QuotesPageSelenium(chrome)
 
-for quote in page.quotespageselenium:
-    print(quote)
+author = input("Enter the author you'd like quotes from: ")
+page.select_author(author)

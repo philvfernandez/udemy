@@ -30,6 +30,13 @@ class QuotesPageSelenium:
         ]
 
     @property
+    def quotes(self) -> List[QuoteSeleniumParser]:
+        return [
+            QuoteSeleniumParser(e)
+            for e in self.browser.find_elements(By.CSS_SELECTOR, QuotesPageLocators.QUOTE)
+        ]
+
+    @property
     def author_dropdown(self) -> Select:
         element = self.browser.find_element(By.CSS_SELECTOR, QuotesPageLocators.AUTHOR_DROPDOWN)
         return Select(element)
@@ -41,6 +48,10 @@ class QuotesPageSelenium:
     def tags_dropdown(self) -> Select:
         element = self.browser.find_element(By.CSS_SELECTOR, QuotesPageLocators.TAGS_DROPDOWN)
         return Select(element)
+
+    @property
+    def search_button(self):
+        return self.browser.find_element(By.CSS_SELECTOR, QuotesPageLocators.SEARCH_BUTTON)
 
     def get_available_tags(self) -> List[str]:
         return[option.text.strip() for option in self.tags_dropdown.options]

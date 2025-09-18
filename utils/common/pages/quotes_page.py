@@ -1,6 +1,7 @@
 from typing import List
 
 from bs4 import BeautifulSoup
+from selenium.common import NoSuchElementException
 from selenium.webdriver.support.ui import Select
 
 from src.section2.s02_l29_for_loops import element
@@ -58,3 +59,18 @@ class QuotesPageSelenium:
 
     def select_tag(self, tag_name: str):
         self.tags_dropdown.select_by_visible_text(tag_name)
+
+    def search_for_quotes(self, author_name: str, tag_name: str) -> List[QuoteSeleniumParser]:
+        self.select_author(author_name)
+        try:
+            self.select_tag(tag_name)
+        except NoSuchElementException:
+            raise InvalidTagForAuthorError(
+                f'The tag "{tag_name}" is not available for the author "{author_name}"'
+            )
+        self.search_button.click()
+        return self.quotes
+
+
+class InvalidTagForAuthorError(ValueError):
+    pass
